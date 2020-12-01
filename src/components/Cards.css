@@ -1,0 +1,115 @@
+.cards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 400px;
+    min-height: 750px;
+    background-color: #f4f4f4;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 2px rgba(70,70,70,0.5);
+}
+.card img{
+    width: 200px;
+}
+
+.card .title{
+    margin: 5px 0;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #111;
+}
+
+.card .description{
+    font-size: 0.9rem;
+    color: #333;
+}
+.card .liked {
+    margin: 10px 0;
+}
+.card .liked input{
+    font-weight: 400;
+    width: 100%;
+    font-size: 0.9rem;
+    border: 1.2px solid #C7C7C7;
+    background-color: #E6E6E6;
+    border-radius: 10px;
+    padding: 5px 10px;
+    height: 35px;
+}
+.card .liked input:focus,.card .liked input:hover{
+    border: 1.2px solid #4a80c7;
+}
+
+.buttons{
+    margin: 10px 0;
+}
+
+.buttons button{
+    text-decoration: none;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    transition: 100ms;
+}
+.buttons button:hover{
+    color: #4a80c7;
+}
+.buttons button .icon{
+    color: #4a80c7;
+}
+.buttons .favorite:hover{
+    color: #E01D0B;
+}
+.buttons .favorite .icon{
+    color: #E01D0B;
+}
+
+.card .obs .icon{
+    cursor: pointer;
+
+}
+.card .obs .icon:hover{
+    color: #E01D0B;
+}
+
+.card .obs{
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 200px;
+}
+.card .obs span{
+    background-color: #BBB;
+    padding: 5px 15px;
+    margin: 5px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 300px;
+    word-wrap: break-word;
+    overflow: hidden;
+    align-items: center;
+}
+
+@media(max-width: 500px){
+    .card{
+        width: 90%;
+        height: 70%;
+    }
+}
