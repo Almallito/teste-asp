@@ -7,39 +7,53 @@
 }
 
 .card{
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    /* flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 270px 70px 1fr 100px;
+    grid-template-areas: 'title' 'img' 'text' 'obs' 'input' ;
     text-align: center;
-    width: 400px;
-    min-height: 750px;
+    width: 300px;
+    height: 650px;
     background-color: #f4f4f4;
-    padding: 15px;
+    padding: 5px 10px;
     margin: 15px;
     border-radius: 5px;
     box-shadow: 4px 4px 2px rgba(70,70,70,0.5);
 }
-.card img{
-    width: 200px;
+.card .poster {
+    grid-area: img;
     margin: 20px 0;
-}
 
+}
+.card img{
+    width: 160px;
+}
 .card .title{
     margin: 5px 0;
+    grid-area: title;
+}
+.card .title span{
     font-size: 1.3rem;
     font-weight: 500;
     color: #111;
 }
-
+.card .text{
+    grid-area: text;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 .card .description{
     font-size: 0.9rem;
     color: #333;
 }
-.card .liked {
+.card .input {
     margin: 10px 0;
+    grid-area: input;
 }
-.card .liked input{
+.card .input input{
     font-weight: 400;
     width: 100%;
     font-size: 0.9rem;
@@ -49,7 +63,7 @@
     padding: 5px 10px;
     height: 35px;
 }
-.card .liked input:focus,.card .liked input:hover{
+.card .input input:focus,.card .input input:hover{
     border: 1.2px solid #4a80c7;
 }
 
@@ -84,15 +98,23 @@
 .card .obs .icon:hover{
     color: #E01D0B;
 }
+.card .coment{
+    grid-area: obs;
+    max-height: 130px;
+}
 
 .card .obs{
+    background-color: #E6E6E6;
     margin: 10px 0;
     display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
-    overflow-y: scroll;
+    height: 100%;
+    overflow-y: auto;
     overflow-x: hidden;
-    max-height: 200px;
+    
 }
 .card .obs span{
     background-color: #BBB;
@@ -107,10 +129,16 @@
     overflow: hidden;
     align-items: center;
 }
+.card .obs label{
+    color: #555;
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 5px;
+}
 
-@media(max-width: 500px){
+/* @media(max-width: 500px){
     .card{
         width: 90%;
         height: 70%;
     }
-}
+} */

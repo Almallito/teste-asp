@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getPopularMovies, addFavorite} from '../api/getMovies'
+import { getPopularMovies, addFavorite } from '../api/getMovies'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -16,7 +16,7 @@ export default props => {
     const [inputs, setInputs] = useState('')
 
     useEffect(() => {
-        dispatch(getPopularMovies( moviesList))
+        if(moviesList.length<1) dispatch(getPopularMovies(moviesList))
     }, [])
 
 
@@ -63,7 +63,7 @@ export default props => {
             observation: e
         }))
         const idMovie = element.id
-        const sendFavorite = {observations, idMovie}
+        const sendFavorite = { observations, idMovie }
 
         console.log(sendFavorite)
         dispatch(addFavorite(sendFavorite))
@@ -73,20 +73,31 @@ export default props => {
         <div className='cards'>
             {moviesList.map((e, i) => (
                 <div className={`card ${i}`} key={i}>
-                    <span className="title">{e.title}</span>
-                    <img src={`${BASE_URL_IMG}${moviesList[0] ? e.poster_path : false}`} alt={`${e.title} poster`} />
-                    <p className="description">{e.overview}</p>
-                    <div className="obs">
-                        {obs[i] ? obs[i].listObsCard.map((msg, index) => (
-                            <span key={`span${index}`}>
-                                <a className='icon' href onClick={() => handleRemove(i, index)}>
-                                    <FontAwesomeIcon icon={faTrashAlt} size='1x' />
-                                </a>
-                                {msg}
-                            </span>
-                        )) : false}
+                    <div className="title">
+                        <span >{e.title}</span>
                     </div>
-                    <form className='liked' onSubmit={event => handleSubmit(event, i,e)}>
+                    <div className="poster">
+                        <img src={`${BASE_URL_IMG}${moviesList[0] ? e.poster_path : false}`} alt={`${e.title} poster`} />
+                    </div>
+                    <div className="text">
+                        <p className="description">{e.overview}</p>
+                    </div>
+                    <div className='coment'>
+                        <div className="label">
+                            <label>Observações:</label>
+                        </div>
+                        <div className="obs">
+                            { obs[i] && obs[i].listObsCard.length > 0 ? obs[i].listObsCard.map((msg, index) => (
+                                <span key={`span${index}`}>
+                                    <a className='icon' href onClick={() => handleRemove(i, index)}>
+                                        <FontAwesomeIcon icon={faTrashAlt} size='1x' />
+                                    </a>
+                                    {msg}
+                                </span>
+                            )) : (<label>Nenhuma observação...</label>)}
+                        </div>
+                    </div>
+                    <form className='input' onSubmit={event => handleSubmit(event, i, e)}>
                         <input type='obs' name={`obs${i}`} value={inputs[i]} onChange={e => changeInput(e, i)} />
                         <div className="buttons">
                             <button type='button' onClick={e => handleAdd(i)}>
