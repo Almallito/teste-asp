@@ -13,7 +13,7 @@ export default function (state = INITIAL_STATE, action){
                 ...state,
                 list: action.payload
             }
-        case types.CLEAR_FAVORITES:
+        case types.ATT_LIST:
             return {
                 ...state,
                 list: action.payload
@@ -24,6 +24,14 @@ export default function (state = INITIAL_STATE, action){
                 infoBd: {
                     ...state.infoBd,
                     observationsMovies: action.payload
+                }
+            }
+        case types.CHANGE_FAVORITES:
+            return {
+                ...state,
+                infoBd: {
+                    ...state.infoBd,
+                    favoriteMovies: action.payload
                 }
             }
         default:

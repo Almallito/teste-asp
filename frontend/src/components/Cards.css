@@ -91,9 +91,19 @@
     color: #E01D0B;
 }
 .buttons .favorite .icon{
+    color: #222;
+    margin: 0 5px;
+}
+.buttons .favorite .icon.favorite{
     color: #E01D0B;
 }
-
+.card .obs button{
+    text-decoration: none;
+    border: none;
+    padding: 2px;
+    margin: 0 5px 0 0;
+    background-color: inherit;
+}
 .card .obs .icon{
     cursor: pointer;
 

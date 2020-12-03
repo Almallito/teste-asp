@@ -18,6 +18,12 @@ export function changeObs(value){
         payload: value
     }
 }
+export function changeFavorites(value){
+    return {
+        type: types.CHANGE_FAVORITES,
+        payload: value
+    }
+}
 export function clearFavorite(){
     return {
         type: types.CLEAR_FAVORITES,

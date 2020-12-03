@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getFavoritesApi, getInfoBd } from '../../api/favorites'
 import { useDispatch, useSelector } from 'react-redux'
-import {changeObs} from '../../store/actions/favorites'
+import {changeObs, changeFavorites, changeList} from '../../store/actions/favorites'
 import {editFavorite, removeFavorite} from '../../api/favorites'
 
 import './Favorite.css'
@@ -19,13 +19,15 @@ export default props => {
     const [obs, setObs] = useState([{ listObsCard: [] }])
     const [inputs, setInputs] = useState([])
 
-    // console.log(observationsCard)
     useEffect(() => {
         dispatch(getInfoBd())
     },[])
     useEffect(() => {
         dispatch(getFavoritesApi(listIds, moviesList))
     },[listIds.length > 0])
+    // useEffect(() => {
+    //     dispatch(getFavoritesApi(listIds, moviesList))
+    // },[listIds.length = 0])
 
 
 
@@ -56,8 +58,14 @@ export default props => {
         event.preventDefault()
         const id_favorite = id
         const request = {id_favorite}
-        console.log(request)
-        dispatch(removeFavorite(request))
+        let newList = [...listIds]
+        for(let obj of newList){
+            if(obj.id === id){
+                newList.splice(newList.indexOf(obj))
+            }
+        }        
+
+        dispatch(removeFavorite(request, newList, moviesList))
         
     }
     function handleEdit(id, index){
@@ -71,7 +79,6 @@ export default props => {
             }
         })
         const request = {id_favorite: id, observations: newObservations}
-        console.log(request)
 
         dispatch(editFavorite(request))
     }

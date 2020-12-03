@@ -27,9 +27,6 @@ const addFavorite = values => dispatch => {
         .catch(err => console.log(err))
 }
 
-// const postFavorite =  values => async dispatch =>{
-//     const resp = await addFavorite(values)
-//     console.log(resp)
-// }
+
 
 export{getPopularMovies, addFavorite}
