@@ -4,6 +4,10 @@
     background-color: #f4f4f4;
     border-radius: 5px;
     box-shadow: 4px 4px 2px rgba(70,70,70,0.5);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .filterPanel .filter {
@@ -46,10 +50,25 @@
     display: flex;
     flex-direction: column;
 }
+.title h1{
+    font-size: 2.5rem;
+    font-weight: 300;
+}
 
-@media(max-width: 600px){
+@media(max-width: 750px){
     .row{
         flex-direction: column;
+    }
+    .filterPanel .filter {
+        margin: 10px 0;
+    }
+    .filterPanel .filter input,.filterPanel .filter select{
+        width: 100%;
+    }
+}
+@media(max-width: 600px){
+    .title{
+        display: none;
     }
 }
 

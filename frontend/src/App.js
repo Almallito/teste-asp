@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { configStore } from './store'
 
 import Main from './Main'
+import Messages from './components/messages'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Router history={history}>
         <Main />
       </Router>
+      <Messages/>
     </Provider>
   )
 }

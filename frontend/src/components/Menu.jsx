@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import './Menu.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,7 +6,7 @@ import { faBars, faTimes, faHome, faHeart } from '@fortawesome/free-solid-svg-ic
 
 import { history } from '../routes/history'
 import If from './If'
-import { Link,useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export default props => {
     const { setOpenMenu, openMenu } = props
@@ -41,15 +41,25 @@ export default props => {
                 <If teste={openMenu === true}>
                     <ul>
                         <Link to='/home'>
-                            <li className={location === '/home' ? 'option selected': 'option'}>
+                            <li className={location === '/home' ? 'option selected' : 'option'}>
                                 <FontAwesomeIcon icon={faHome} size='1x' /> Início
                             </li>
                         </Link>
                         <Link to='/favorites'>
-                            <li className={location === '/favorites' ? 'option selected': 'option'}>
+                            <li className={location === '/favorites' ? 'option selected' : 'option'}>
                                 <FontAwesomeIcon icon={faHeart} size='1x' /> Favoritos
                             </li>
                         </Link>
+                    </ul>
+                </If>
+                <If teste={openMenu === false}>
+                    <ul>
+                        <li className={location === '/home' ? 'option closed selected ' : 'option closed'}>
+                            <FontAwesomeIcon icon={faHome} size='1x' />
+                        </li>
+                        <li className={location === '/favorites' ? 'option closed selected' : 'option closed'}>
+                            <FontAwesomeIcon icon={faHeart} size='1x' />
+                        </li>
                     </ul>
                 </If>
             </div>

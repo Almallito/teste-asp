@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { getMoviesApi, addFavorite } from '../../api/movies'
 import { useDispatch, useSelector } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
-import './Home.css'
+
 
 import Cards from '../../components/Cards'
+import Filter from '../../components/Filter'
 
 export default props => {
 
@@ -98,25 +97,13 @@ export default props => {
     return (
         <>
             <div className='content'>
-                <div className="filterPanel">
-                    <form className='formFilter row' onSubmit={e => submitFilter(e)}>
-                        <div className='column filter'>
-                            <label htmlFor="lang">Filtrar o Idioma:</label>
-                            <select name="languages" id='lang' value={languageFilter} onChange={e => changeFilterLanguage(e)}>
-                                <option value="pt-BR">Português</option>
-                                <option value="en-US">Inglês</option>
-                            </select>
-                        </div>
-                        <div className='column filter'>
-                            <label htmlFor="year">Filtrar o Ano de Lançamento: </label>
-                            <input type="number" name='year' value={yearFilter} onChange={e => changeFilterYear(e)}/>
-                        </div>
-                        <button type='submit'>
-                                <FontAwesomeIcon icon={faFilter} size='1x' />  Filtrar
-                        </button>
-                    </form>
-
-                </div>
+                <Filter changeFilterLanguage={changeFilterLanguage} 
+                    changeFilterYear={changeFilterYear} 
+                    yearFilter={yearFilter} 
+                    languageFilter={languageFilter} 
+                    submitFilter={submitFilter}
+                    view='home'
+                    title='Início'/>
                 <Cards view='home'
                     handleSubmit={handleSubmit}
                     handleRemove={handleRemove}

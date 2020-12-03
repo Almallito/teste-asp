@@ -31,7 +31,20 @@
 .nav .option.selected{
     color: #5898ED;
     border-bottom:1px solid #5898ED;
+    background-color: #E6E6E6;
 }
+.nav .option.closed{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav .option.closed.selected{
+    background-color: inherit;
+}
+.nav .option.closed:hover{
+    background-color: inherit;
+}
+
 .nav .option:hover{
     background-color: #E6E6E6;
 }

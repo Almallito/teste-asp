@@ -79,7 +79,8 @@ export default props => {
                                 </div>
                             )}
                     </div>
-                    <form className='input' onSubmit={view === 'home' ? event => handleSubmit(event, i, e) : event => handleSubmit(event, idFavorite[i])}>
+                    <form className='input' 
+                        onSubmit={view === 'home' ? event => handleSubmit(event, i, e) : event => handleSubmit(event, idFavorite[i])}>
                         <input type='obs' name={`obs${i}`} value={inputs[i]} onChange={e => changeInput(e, i)} />
                         <div className="buttons">
                             <button type='button' 
