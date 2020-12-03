@@ -8,9 +8,6 @@
 
 .card{
     display: grid;
-    /* flex-direction: column;
-    justify-content: center;
-    align-items: center; */
     grid-template-columns: 1fr;
     grid-template-rows: 40px 270px 70px 1fr 100px;
     grid-template-areas: 'title' 'img' 'text' 'obs' 'input' ;
@@ -69,6 +66,12 @@
 
 .buttons{
     margin: 10px 0;
+}
+.buttons .edit .icon{
+    color:#E0B200;
+}
+.buttons .edit:hover{
+    color:#E0B200;
 }
 
 .buttons button{

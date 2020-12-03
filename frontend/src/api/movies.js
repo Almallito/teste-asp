@@ -1,9 +1,12 @@
 import axios from 'axios'
 import {changeMovies} from '../store/actions/movies'
+import {changeBd} from '../store/actions/favorites'
 
-const API_KEY= '?api_key=537f48af0947b2cdf1dd8d6406075076'
-const BASE_URL_API = 'https://api.themoviedb.org/3/movie'
-const BASE_URL_BD = 'http://localhost:8080'
+import {KEY,API,BD} from './urlsBases'
+const API_KEY = KEY
+const BASE_URL_API = API
+const BASE_URL_BD = BD
+
 
 
 const getPopularMovies = oldMovies => dispatch => {
@@ -15,17 +18,12 @@ const getPopularMovies = oldMovies => dispatch => {
         )
         .catch(err => console.log(err))
 }
-const getMovie = (idFilme, oldMovies) => dispatch => {
 
-    axios.get(`${BASE_URL_API}/${idFilme}${API_KEY}`)
-        .then(resp => dispatch(changeMovies([...oldMovies, resp.data])))
-        .catch(err => console.log(err))
-}
 
 const addFavorite = values => dispatch => {
 
     axios.post(`${BASE_URL_BD}/api/movies`,values)
-        .then(resp => console.log(resp.data))
+        .then(resp => dispatch(changeBd(resp.data)))
         .catch(err => console.log(err))
 }
 
@@ -34,4 +32,4 @@ const addFavorite = values => dispatch => {
 //     console.log(resp)
 // }
 
-export{getPopularMovies,getMovie, addFavorite}
+export{getPopularMovies, addFavorite}

@@ -1,72 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import { getPopularMovies, addFavorite } from '../api/getMovies'
-import { useDispatch, useSelector } from 'react-redux'
-
+import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faPlus, faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons'
+import If from '../components/If'
+import { useSelector } from 'react-redux'
 
 import './Cards.css'
 
 export default props => {
-    const dispatch = useDispatch()
-    const moviesList = useSelector(state => state.movies.list)
     const BASE_URL_IMG = 'http://image.tmdb.org/t/p/w185/'
+    const { handleSubmit, handleRemove, handleAdd, moviesList, obs, inputs, changeInput, view, handleEdit } = props
 
-    const [obs, setObs] = useState([{ listObsCard: [] }])
-    const [inputs, setInputs] = useState('')
+    const listIds = useSelector(state => state.favorites.infoBd.favoriteMovies)
+    const observations = useSelector(state => state.favorites.infoBd.observationsMovies)
 
-    useEffect(() => {
-        if(moviesList.length<1) dispatch(getPopularMovies(moviesList))
-    }, [])
+    let idFavorite = []
 
+    let notNullObs = true
 
-    function changeInput(event, index) {
-        let values = [...inputs]
-        values[index] = event.target.value
-        setInputs(values)
-    }
-
-    function handleAdd(index) {
-        let newObs = [...obs]
-        let newList = []
-
-        if (obs[index]) { // verificando se já existe observações para o card
-            newList = obs[index].listObsCard
-
-        } else {
-            newObs[index] = { listObsCard: [] } // adiciona o campo de observações para o  card especifico
-            newList = newObs[index].listObsCard
+    for (let obj of listIds) {
+        if(!idFavorite.includes(obj.id)){
+            idFavorite.push(obj.id)
         }
-
-        newList.push(inputs[index])
-        newObs[index] = { listObsCard: newList }
-        let values = [...inputs]
-        values[index] = ''
-        setInputs(values)
-        setObs(newObs)
-
-    }
-
-    function handleRemove(indexPai, indexFilho) { //funcao remove um observação do card
-        let newObs = [...obs]
-        let valor = newObs[indexPai].listObsCard[indexFilho]
-        newObs[indexPai].listObsCard.splice(newObs[indexPai].listObsCard.indexOf(valor), 1)
-        setObs(newObs)
-    }
-
-    function handleSubmit(event, index, element) {
-        event.preventDefault()
-        let values = [...inputs]
-        values[index] = ''
-        setInputs(values)
-        const observations = obs[index].listObsCard.map(e => ({
-            observation: e
-        }))
-        const idMovie = element.id
-        const sendFavorite = { observations, idMovie }
-
-        console.log(sendFavorite)
-        dispatch(addFavorite(sendFavorite))
     }
 
     return (
@@ -86,29 +40,58 @@ export default props => {
                         <div className="label">
                             <label>Observações:</label>
                         </div>
-                        <div className="obs">
-                            { obs[i] && obs[i].listObsCard.length > 0 ? obs[i].listObsCard.map((msg, index) => (
-                                <span key={`span${index}`}>
-                                    <a className='icon' href onClick={() => handleRemove(i, index)}>
-                                        <FontAwesomeIcon icon={faTrashAlt} size='1x' />
-                                    </a>
-                                    {msg}
-                                </span>
-                            )) : (<label>Nenhuma observação...</label>)}
-                        </div>
+                        {view === 'home' ? (
+                            <div className="obs">
+                                {obs[i] && obs[i].listObsCard.length > 0 ? obs[i].listObsCard.map((msg, index) => (
+                                    <span key={`span${index}`}>
+                                        <a className='icon' href onClick={() => handleRemove(i, index)}>
+                                            <FontAwesomeIcon icon={faTrashAlt} size='1x' />
+                                        </a>
+                                        {msg}
+                                    </span>
+                                )) : (<label>Nenhuma observação...</label>)}
+                            </div>
+                        ) : (
+                                <div className="obs">
+                                    {console.log(observations)}
+                                    {observations.map((msg, index) => {
+                                        
+                                        for (let obj of listIds) {
+                                            if (obj.movie_id === e.id && obj.id === msg.favorite_id) {
+                                                notNullObs = false
+                                                return (
+                                                    <span key={`span${index}`}>
+                                                        <a className='icon' href onClick={() => handleRemove(index)}>
+                                                            <FontAwesomeIcon icon={faTrashAlt} size='1x' />
+                                                        </a>
+                                                        {msg.observation}
+                                                    </span>
+                                                )
+                                            }
+                                        }
+                                    })}
+                                    {notNullObs === true ? (<label>Nenhuma observação...</label>) : false}
+                                </div>
+                            )}
                     </div>
-                    <form className='input' onSubmit={event => handleSubmit(event, i, e)}>
+                    <form className='input' onSubmit={view === 'home' ? event => handleSubmit(event, i, e) : event => handleSubmit(event, idFavorite[i])}>
                         <input type='obs' name={`obs${i}`} value={inputs[i]} onChange={e => changeInput(e, i)} />
                         <div className="buttons">
-                            <button type='button' onClick={e => handleAdd(i)}>
+                            <button type='button' onClick={e => view === 'home' ? handleAdd(i) : handleAdd(idFavorite[i], i)}>
                                 <FontAwesomeIcon className='icon' icon={faPlus} size='1x' /> Adicionar Obs.
                             </button>
+                            <If teste={view === 'favorite'}>
+                                <button type='button' className='iconEdit' onClick={e => handleEdit(idFavorite[i], i)}>
+                                    <FontAwesomeIcon className='icon' icon={faEdit} size='1x' /> Salvar
+                                </button>
+                            </If>
                             <button className='favorite' type='submit'>
-                                <FontAwesomeIcon className='icon' icon={faHeart} size='1x' /> Favoritar
-                        </button>
+                                <FontAwesomeIcon className='icon' icon={faHeart} size='1x' /> {view === 'favorite' ? (<span>Desfavoritar</span>) : (<span>Favoritar</span>)}
+                            </button>
                         </div>
                     </form>
                 </div>
+
             ))}
         </div>
     )
