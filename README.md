@@ -1,4 +1,4 @@
-Teste-ASP
+###Teste-ASP
 Sistema que consome a API TMDB(The Movie Database API), podendo aplicar filtros, observações e favoritar, algumas tecnologias empregadas:
 
         ReactJS
@@ -11,7 +11,7 @@ Sistema que consome a API TMDB(The Movie Database API), podendo aplicar filtros,
         
       
 
-Páginas e objetivos.
+###Páginas e objetivos.
 
         Página principal - Procurar por filmes
 
@@ -19,9 +19,9 @@ Páginas e objetivos.
 
 
 
-*Para rodar projeto.
-#entre em ./server/knexfile.js e configure seu banco de dados
-#entre em ./frontend/api/urlsBases.js e configure o endereço do seu banco de dados na const BD
+###Para rodar projeto.
+###entre em ./server/knexfile.js e configure seu banco de dados
+###entre em ./frontend/api/urlsBases.js e configure o endereço do seu banco de dados na const BD
 
 $ cd ./server
 $ npm i
