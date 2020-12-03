@@ -142,7 +142,7 @@
     overflow: hidden;
     align-items: center;
 }
-.card .obs label{
+.card .nullcontent{
     color: #555;
     font-size: 0.9rem;
     font-weight: 300;

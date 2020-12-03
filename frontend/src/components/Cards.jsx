@@ -39,7 +39,7 @@ export default props => {
                         <img src={`${BASE_URL_IMG}${moviesList[0] ? e.poster_path : false}`} alt={`${e.title} poster`} />
                     </div>
                     <div className="text">
-                        <p className="description">{e.overview}</p>
+                        <p className="description">{e.overview ? e.overview : <label className='nullcontent' >Nenhuma descrição...</label>}</p>
                     </div>
                     <div className='coment'>
                         <div className="label">
@@ -55,7 +55,7 @@ export default props => {
                                         </button>
                                         {msg}
                                     </span>
-                                )) : (<label>Nenhuma observação...</label>)}
+                                )) : (<label className='nullcontent'>Nenhuma observação...</label>)}
                             </div>
                         ) : (
                                 <div className="obs">

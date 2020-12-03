@@ -21,7 +21,7 @@ const getFavoritesApi = (listIds, oldMovies) => async dispatch => {
         if(film.id) oldListIds.push(film.id)
     }
     listIds.length > 0 ? listIds.map(e => {
-        axios.get(`${BASE_URL_API}/${e.movie_id}${API_KEY}`)
+        axios.get(`${BASE_URL_API}/movie/${e.movie_id}${API_KEY}`)
             .then(resp => {
                 if(oldListIds.length == 0){ // verificando se é a primeira vez que a view de favoritos esta sendo carregada
                     return list = [...list, resp.data]

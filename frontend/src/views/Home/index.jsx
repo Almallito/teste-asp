@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { getPopularMovies, addFavorite } from '../../api/movies'
+import { getMoviesApi, addFavorite } from '../../api/movies'
 import { useDispatch, useSelector } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import './Home.css'
 
 import Cards from '../../components/Cards'
@@ -12,11 +14,16 @@ export default props => {
     const moviesList = useSelector(state => state.movies.list)
 
     const [obs, setObs] = useState([{ listObsCard: [] }])
+    const [yearFilter, setYearFilter] = useState('2020')
+    const [languageFilter, setLanguageFilter] = useState('pt-BR')
     const [inputs, setInputs] = useState([])
 
     useEffect(() => {
-        
-        if(moviesList.length<1) dispatch(getPopularMovies(moviesList))
+        const params = {
+            mode: 'discover',
+            language: 'pt-BR'
+        }
+        if (moviesList.length < 1) dispatch(getMoviesApi(params))
     }, [])
 
 
@@ -68,17 +75,58 @@ export default props => {
         dispatch(addFavorite(sendFavorite))
     }
 
+    function changeFilterYear(event){
+        
+         setYearFilter(event.target.value)
+       
+    }
+    function changeFilterLanguage(event){
+        setLanguageFilter(event.target.value)
+    }
+
+    function submitFilter(event){
+        event.preventDefault()
+        console.log(languageFilter, yearFilter)
+        const params = {
+            mode: 'discover',
+            language: languageFilter,
+            year: `${yearFilter}`
+        }
+        dispatch(getMoviesApi(params))
+    }
+
     return (
-        <div className='content'>
-            <Cards view='home' 
-                handleSubmit={handleSubmit} 
-                handleRemove={handleRemove} 
-                handleAdd={handleAdd} 
-                changeInput={changeInput} 
-                moviesList={moviesList} 
-                obs={obs}
-                inputs={inputs}
+        <>
+            <div className='content'>
+                <div className="filterPanel">
+                    <form className='formFilter row' onSubmit={e => submitFilter(e)}>
+                        <div className='column filter'>
+                            <label htmlFor="lang">Filtrar o Idioma:</label>
+                            <select name="languages" id='lang' value={languageFilter} onChange={e => changeFilterLanguage(e)}>
+                                <option value="pt-BR">Português</option>
+                                <option value="en-US">Inglês</option>
+                            </select>
+                        </div>
+                        <div className='column filter'>
+                            <label htmlFor="year">Filtrar o Ano de Lançamento: </label>
+                            <input type="number" name='year' value={yearFilter} onChange={e => changeFilterYear(e)}/>
+                        </div>
+                        <button type='submit'>
+                                <FontAwesomeIcon icon={faFilter} size='1x' />  Filtrar
+                        </button>
+                    </form>
+
+                </div>
+                <Cards view='home'
+                    handleSubmit={handleSubmit}
+                    handleRemove={handleRemove}
+                    handleAdd={handleAdd}
+                    changeInput={changeInput}
+                    moviesList={moviesList}
+                    obs={obs}
+                    inputs={inputs}
                 />
-        </div>
+            </div>
+        </>
     )
 }

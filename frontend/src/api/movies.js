@@ -9,11 +9,11 @@ const BASE_URL_BD = BD
 
 
 
-const getPopularMovies = oldMovies => dispatch => {
+const getMoviesApi = params => dispatch => {
 
-    axios.get(`${BASE_URL_API}/popular${API_KEY}&page=1`)
+    axios.get(`${BASE_URL_API}/${params.mode}/movie${API_KEY}&page=1&language=${params.language}${params.year ? `&year=${params.year}` : ''}`)
         .then(resp => 
-            dispatch(changeMovies([...oldMovies, ...resp.data.results]))
+            dispatch(changeMovies([...resp.data.results]))
             // console.log(resp.data.results)
         )
         .catch(err => console.log(err))
@@ -29,4 +29,4 @@ const addFavorite = values => dispatch => {
 
 
 
-export{getPopularMovies, addFavorite}
+export{getMoviesApi, addFavorite}
