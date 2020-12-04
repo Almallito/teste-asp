@@ -34,5 +34,11 @@ $ cd ./frontend
 $ npm i
 $ npm start
 ```
+## Prints
+1. Home
+![asp1](https://user-images.githubusercontent.com/61473497/101104865-dfc6eb00-35aa-11eb-86c7-4264995438dc.png)
+
+2. Favorites
+![asp2](https://user-images.githubusercontent.com/61473497/101104866-e0f81800-35aa-11eb-9603-7c262089ba60.png)
 
 
